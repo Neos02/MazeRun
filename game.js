@@ -1,7 +1,19 @@
+/**
+ * Responsible for updating the game
+ * @param {Number} deltaTime the time in milliseconds since the last frame
+ */
 function update(deltaTime) {}
 
+/**
+ * Responsible for drawing items to the screen
+ */
 function draw() {}
 
+/**
+ * The main gameloop. Computes the deltatime and passes it to the update function.
+ * Calls draw and update.
+ * @param {Date} timestamp the current timestamp
+ */
 function loop(timestamp) {
   const deltaTime = timestamp - prevTime;
 
@@ -17,10 +29,12 @@ function loop(timestamp) {
   window.requestAnimationFrame(loop);
 }
 
+/**
+ * Computes and displays the FPS
+ * @param {Number} deltaTime the time in milliseconds since the last frame
+ */
 function showFps(deltaTime) {
-  const fps = Math.round(1000 / deltaTime);
-
   ctx.fillStyle = "black";
   ctx.fontWeight = 20;
-  ctx.fillText(`FPS: ${fps}`, 0, 10);
+  ctx.fillText(`FPS: ${Math.round(1000 / deltaTime)}`, 0, 10);
 }
