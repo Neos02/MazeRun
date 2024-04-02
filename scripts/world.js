@@ -30,6 +30,8 @@ function drawWall(row, col) {
   const wallColor = "black";
   const lines = [];
 
+  let gameCorner;
+
   // Add shadow effect to walls
   for (let xOffset = 0; xOffset <= 1; xOffset++) {
     for (let yOffset = 0; yOffset <= 1; yOffset++) {
@@ -43,19 +45,21 @@ function drawWall(row, col) {
 
       if (player.pos.x === x1) {
         x2 = x1;
-
-        if (player.pos.y > y1) {
-          y2 = HEIGHT;
-        } else {
-          y2 = 0;
-        }
       } else if (player.pos.x > x1) {
-        x2 = 0;
-        y2 = slope * x2 + intercept;
+        x2 = -WIDTH;
       } else {
-        x2 = WIDTH;
-        y2 = slope * x2 + intercept;
+        x2 = 2 * WIDTH;
       }
+
+      y2 = slope * x2 + intercept;
+
+      if ((player.pos.x === x1 && player.pos.y > y1) || y2 < 0) {
+        y2 = Math.max(y2, -HEIGHT);
+      } else if ((player.pos.x === x1 && player.pos.y < y1) || y2 > HEIGHT) {
+        y2 = Math.min(y2, 2 * HEIGHT);
+      }
+
+      x2 = (y2 - intercept) / slope;
 
       lines.push({
         p1: { x: x1, y: y1 },
@@ -69,8 +73,9 @@ function drawWall(row, col) {
       distanceSquared(a.p1, player.pos) - distanceSquared(b.p1, player.pos)
   );
 
-  polygon(wallColor, lines[0].p1, lines[0].p2, lines[3].p2, lines[3].p1);
-  polygon(wallColor, lines[1].p1, lines[1].p2, lines[2].p2, lines[2].p1);
+  polygon(wallColor, lines[0].p1, lines[0].p2, lines[1].p2, lines[1].p1);
+  polygon(wallColor, lines[0].p1, lines[0].p2, lines[2].p2, lines[2].p1);
+  polygon(wallColor, lines[1].p2, lines[0].p2, lines[2].p2, lines[3].p2);
 
   rect(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE, wallColor);
 }
