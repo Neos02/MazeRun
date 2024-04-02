@@ -14,6 +14,17 @@ function movePlayerToRowCol(row, col) {
 }
 
 /**
+ * Gets the row and column that the player is currently inside of
+ * @returns The row and column the player is in
+ */
+function getPlayerRowCol() {
+  return {
+    row: Math.floor(playerPos.y / TILE_SIZE),
+    col: Math.floor(playerPos.x / TILE_SIZE),
+  };
+}
+
+/**
  * Draws the player
  */
 function drawPlayer() {

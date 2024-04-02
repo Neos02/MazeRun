@@ -30,6 +30,7 @@ function drawWall(row, col) {
   const wallColor = "black";
   const lines = [];
 
+  // Add shadow effect to walls
   for (let xOffset = 0; xOffset <= 1; xOffset++) {
     for (let yOffset = 0; yOffset <= 1; yOffset++) {
       const x1 = (col + xOffset) * TILE_SIZE;
@@ -79,9 +80,30 @@ function drawWall(row, col) {
  * @param {Number[][]} level the level to draw
  */
 function drawWorld(level) {
+  const tileQueue = [];
+  const playerRowCol = getPlayerRowCol();
+
+  // Because of wall shadows, the tiles need to be drawn in descending order of
+  // distance from the player
   for (let row = 0; row < ROWS; row++) {
     for (let col = 0; col < COLS; col++) {
-      drawTile(level[row][col], row, col);
+      tileQueue.push({ type: level[row][col], row, col });
     }
+  }
+
+  tileQueue.sort(
+    (a, b) =>
+      distanceSquared(
+        { x: b.col, y: b.row },
+        { x: playerRowCol.col, y: playerRowCol.row }
+      ) -
+      distanceSquared(
+        { x: a.col, y: a.row },
+        { x: playerRowCol.col, y: playerRowCol.row }
+      )
+  );
+
+  for (const tile of tileQueue) {
+    drawTile(tile.type, tile.row, tile.col);
   }
 }

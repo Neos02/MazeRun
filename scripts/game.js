@@ -3,8 +3,8 @@
  * @param {Number} deltaTime the time in milliseconds since the last frame
  */
 function update(deltaTime) {
-  playerPos.x += 0.05 * deltaTime;
-  playerPos.y += 0.02 * deltaTime;
+  // playerPos.x += 0.05 * deltaTime;
+  // playerPos.y += 0.02 * deltaTime;
 }
 
 /**
