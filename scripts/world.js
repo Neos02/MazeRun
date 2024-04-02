@@ -77,9 +77,8 @@ function drawWall(row, col) {
 
 /**
  * Draws the specified level
- * @param {Number[][]} level the level to draw
  */
-function drawWorld(level) {
+function drawWorld() {
   const tileQueue = [];
   const playerRowCol = player.getRowCol();
 
@@ -87,7 +86,7 @@ function drawWorld(level) {
   // distance from the player
   for (let row = 0; row < ROWS; row++) {
     for (let col = 0; col < COLS; col++) {
-      tileQueue.push({ type: level[row][col], row, col });
+      tileQueue.push({ type: currentLevel[row][col], row, col });
     }
   }
 
@@ -106,4 +105,32 @@ function drawWorld(level) {
   for (const tile of tileQueue) {
     drawTile(tile.type, tile.row, tile.col);
   }
+}
+
+function playerWallCollision(nextPosition) {
+  // Iterate through corners in the order:
+  // top left
+  // bottom left
+  // top right
+  // bottom right
+  for (let i = 0; i <= 1; i++) {
+    for (let j = 0; j <= 1; j++) {
+      const cornerRow = Math.floor(
+        (nextPosition.y + PLAYER_HEIGHT * (-0.5 + j)) / TILE_SIZE
+      );
+      const cornerCol = Math.floor(
+        (nextPosition.x + PLAYER_WIDTH * (-0.5 + i)) / TILE_SIZE
+      );
+
+      if (
+        isInBounds(currentLevel, cornerRow) &&
+        isInBounds(currentLevel[cornerRow], cornerCol) &&
+        currentLevel[cornerRow][cornerCol] === WALL
+      ) {
+        return true;
+      }
+    }
+  }
+
+  return false;
 }

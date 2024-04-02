@@ -19,7 +19,7 @@ function update(deltaTime) {
  * Responsible for drawing items to the screen
  */
 function draw() {
-  drawWorld(currentLevel);
+  drawWorld();
   player.draw();
 }
 

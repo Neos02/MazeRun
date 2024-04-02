@@ -1,4 +1,6 @@
 const PLAYER_SPEED = 0.1;
+const PLAYER_WIDTH = 10;
+const PLAYER_HEIGHT = 10;
 
 class Player {
   constructor({ keyMapping }) {
@@ -26,8 +28,20 @@ class Player {
    * Updates the player
    */
   update = (deltaTime) => {
-    this.pos.x += this.vel.x * deltaTime;
-    this.pos.y += this.vel.y * deltaTime;
+    const nextPosX = this.pos.x + this.vel.x * deltaTime;
+    const nextPosY = this.pos.y + this.vel.y * deltaTime;
+
+    if (!playerWallCollision({ x: nextPosX, y: this.pos.y })) {
+      this.pos.x = nextPosX;
+    } else {
+      this.vel.x *= 0.05;
+    }
+
+    if (!playerWallCollision({ x: this.pos.x, y: nextPosY })) {
+      this.pos.y = nextPosY;
+    } else {
+      this.vel.y *= 0.05;
+    }
 
     if (this.keyStates.up && !this.keyStates.down) {
       this.vel.y = -PLAYER_SPEED;
@@ -51,10 +65,10 @@ class Player {
    */
   draw = () => {
     rect(
-      this.pos.x - TILE_SIZE / 4,
-      this.pos.y - TILE_SIZE / 4,
-      TILE_SIZE / 2,
-      TILE_SIZE / 2,
+      this.pos.x - PLAYER_WIDTH / 2,
+      this.pos.y - PLAYER_HEIGHT / 2,
+      PLAYER_WIDTH,
+      PLAYER_HEIGHT,
       "red"
     );
   };
