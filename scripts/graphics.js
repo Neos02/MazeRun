@@ -22,5 +22,24 @@ function circle(x, y, radius, color) {
   ctx.fillStyle = color;
   ctx.beginPath();
   ctx.arc(x, y, radius, 0, Math.PI * 2);
+  ctx.closePath();
+  ctx.fill();
+}
+
+/**
+ * Draws a polygon using the specified points and the color
+ * @param {String} color the color to fill the polygon with
+ * @param  {...Object} points the points in order of the polygon
+ */
+function polygon(color, ...points) {
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.moveTo(points[0].x, points[0].y);
+
+  for (let i = 1; i < points.length; i++) {
+    ctx.lineTo(points[i].x, points[i].y);
+  }
+
+  ctx.closePath();
   ctx.fill();
 }

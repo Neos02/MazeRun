@@ -26,4 +26,5 @@ function initCanvas(width, height) {
 }
 
 initCanvas(WIDTH, HEIGHT);
+loadLevel(LEVEL_1);
 window.requestAnimationFrame(loop);
