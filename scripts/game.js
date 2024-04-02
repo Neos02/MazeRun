@@ -48,7 +48,7 @@ function loop(timestamp) {
  * @param {Number} deltaTime the time in milliseconds since the last frame
  */
 function showFps(deltaTime) {
-  ctx.fillStyle = "black";
+  ctx.fillStyle = "gray";
   ctx.fontWeight = 20;
-  ctx.fillText(`FPS: ${Math.round(1000 / deltaTime)}`, 0, 10);
+  ctx.fillText(`FPS: ${Math.round(1000 / deltaTime)}`, 5, 15);
 }
