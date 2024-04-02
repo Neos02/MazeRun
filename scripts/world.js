@@ -11,7 +11,7 @@ function drawTile(tile, row, col) {
     case AIR:
       break;
     case SPAWN:
-      movePlayerToRowCol(row, col);
+      player.moveToRowCol(row, col);
       currentLevel[row][col] = AIR;
       break;
     case WALL:
@@ -36,20 +36,20 @@ function drawWall(row, col) {
       const x1 = (col + xOffset) * TILE_SIZE;
       const y1 = (row + yOffset) * TILE_SIZE;
 
-      const slope = (y1 - playerPos.y) / (x1 - playerPos.x);
+      const slope = (y1 - player.pos.y) / (x1 - player.pos.x);
       const intercept = y1 - slope * x1;
 
       let x2, y2;
 
-      if (playerPos.x === x1) {
+      if (player.pos.x === x1) {
         x2 = x1;
 
-        if (playerPos.y > y1) {
+        if (player.pos.y > y1) {
           y2 = HEIGHT;
         } else {
           y2 = 0;
         }
-      } else if (playerPos.x > x1) {
+      } else if (player.pos.x > x1) {
         x2 = 0;
         y2 = slope * x2 + intercept;
       } else {
@@ -66,7 +66,7 @@ function drawWall(row, col) {
 
   lines.sort(
     (a, b) =>
-      distanceSquared(a.p1, playerPos) - distanceSquared(b.p1, playerPos)
+      distanceSquared(a.p1, player.pos) - distanceSquared(b.p1, player.pos)
   );
 
   polygon(wallColor, lines[0].p1, lines[0].p2, lines[3].p2, lines[3].p1);
@@ -81,7 +81,7 @@ function drawWall(row, col) {
  */
 function drawWorld(level) {
   const tileQueue = [];
-  const playerRowCol = getPlayerRowCol();
+  const playerRowCol = player.getRowCol();
 
   // Because of wall shadows, the tiles need to be drawn in descending order of
   // distance from the player

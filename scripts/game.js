@@ -1,10 +1,18 @@
+const player = new Player({
+  keyMapping: {
+    up: KEY_W,
+    down: KEY_S,
+    left: KEY_A,
+    right: KEY_D,
+  },
+});
+
 /**
  * Responsible for updating the game
  * @param {Number} deltaTime the time in milliseconds since the last frame
  */
 function update(deltaTime) {
-  // playerPos.x += 0.05 * deltaTime;
-  // playerPos.y += 0.02 * deltaTime;
+  player.update(deltaTime);
 }
 
 /**
@@ -12,7 +20,7 @@ function update(deltaTime) {
  */
 function draw() {
   drawWorld(currentLevel);
-  drawPlayer();
+  player.draw();
 }
 
 /**

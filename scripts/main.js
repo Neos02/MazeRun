@@ -25,6 +25,8 @@ function initCanvas(width, height) {
   ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
 }
 
+document.addEventListener("keydown", keyPressed);
+document.addEventListener("keyup", keyReleased);
 initCanvas(WIDTH, HEIGHT);
 loadLevel(LEVEL_1);
 window.requestAnimationFrame(loop);
