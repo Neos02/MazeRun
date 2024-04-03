@@ -49,8 +49,10 @@ function generateMaze(rows, cols) {
   }
 
   for (const cell of maze) {
-    grid[cell.y * 2 + 1][cell.x * 2 + 1] = SPAWN;
+    grid[cell.y * 2 + 1][cell.x * 2 + 1] = AIR;
   }
+
+  grid[1][1] = SPAWN;
 
   return grid;
 }

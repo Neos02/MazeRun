@@ -29,7 +29,6 @@ function drawTile(tile, row, col) {
  * @param {Number} col the column to draw the wall at
  */
 function drawWall(row, col) {
-  const wallColor = "black";
   const lines = [];
 
   // Add shadow effect to walls
@@ -74,17 +73,37 @@ function drawWall(row, col) {
   );
 
   // Draw polygons for shadow effect
-  polygon(wallColor, lines[0].p1, lines[0].p2, lines[1].p2, lines[1].p1);
-  polygon(wallColor, lines[0].p1, lines[0].p2, lines[2].p2, lines[2].p1);
-  polygon(wallColor, lines[1].p2, lines[0].p2, lines[2].p2, lines[3].p2);
+  const wallColorTopBottom = "rgb(30, 30, 40)";
+  const wallColorLeftRight = "rgb(40, 40, 50)";
 
-  rect(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE, wallColor);
+  rect(
+    col * TILE_SIZE,
+    row * TILE_SIZE,
+    TILE_SIZE,
+    TILE_SIZE,
+    wallColorTopBottom
+  );
+  polygon(
+    lines[0].p1.x === lines[2].p1.x ? wallColorLeftRight : wallColorTopBottom,
+    lines[0].p1,
+    lines[0].p2,
+    lines[2].p2,
+    lines[2].p1
+  );
+  polygon(
+    lines[0].p1.x === lines[2].p1.x ? wallColorTopBottom : wallColorLeftRight,
+    lines[0].p1,
+    lines[0].p2,
+    lines[1].p2,
+    lines[1].p1
+  );
 }
 
 /**
  * Draws the world
  */
 function drawWorld() {
+  // Spawn player in
   for (let row = 0; row < ROWS; row++) {
     for (let col = 0; col < COLS; col++) {
       if (world[row][col] === SPAWN) {
@@ -104,6 +123,15 @@ function drawWorld() {
     x: minRowCol.x + Math.floor(WIDTH / TILE_SIZE) + 2,
     y: minRowCol.y + Math.floor(HEIGHT / TILE_SIZE) + 2,
   };
+
+  // Draw ground
+  rect(
+    minRowCol.x * TILE_SIZE,
+    minRowCol.y * TILE_SIZE,
+    (maxRowCol.x - minRowCol.x) * TILE_SIZE,
+    (maxRowCol.y - minRowCol.y) * TILE_SIZE,
+    "lightgray"
+  );
 
   // Because of wall shadows, the tiles need to be drawn in descending order of
   // distance from the player
