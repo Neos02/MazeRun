@@ -30,6 +30,10 @@ function drawTile(tile, row, col) {
  */
 function drawWall(row, col) {
   const lines = [];
+  const minY = -ROWS * TILE_SIZE;
+  const maxY = 2 * ROWS * TILE_SIZE;
+  const minX = -COLS * TILE_SIZE;
+  const maxX = 2 * COLS * TILE_SIZE;
 
   // Add shadow effect to walls
   for (let xOffset = 0; xOffset <= 1; xOffset++) {
@@ -37,28 +41,25 @@ function drawWall(row, col) {
       const x1 = (col + xOffset) * TILE_SIZE;
       const y1 = (row + yOffset) * TILE_SIZE;
 
-      const slope = (y1 - player.pos.y) / (x1 - player.pos.x);
-      const intercept = y1 - slope * x1;
-
       let x2, y2;
 
       if (player.pos.x === x1) {
         x2 = x1;
-      } else if (player.pos.x > x1) {
-        x2 = -ROWS * TILE_SIZE;
+
+        y2 = player.pos.y > y1 ? minY : maxY;
       } else {
-        x2 = 2 * ROWS * TILE_SIZE;
+        const slope = (y1 - player.pos.y) / (x1 - player.pos.x);
+        const intercept = y1 - slope * x1;
+
+        x2 = player.pos.x > x1 ? minX : maxX;
+        y2 = Math.max(Math.min(slope * x2 + intercept, maxY), minY);
+
+        if (slope === 0) {
+          x2 = player.pos.x > x1 ? -ROWS * TILE_SIZE : 2 * ROWS * TILE_SIZE;
+        } else {
+          x2 = (y2 - intercept) / slope;
+        }
       }
-
-      y2 = slope * x2 + intercept;
-
-      if ((player.pos.x === x1 && player.pos.y > y1) || y2 < 0) {
-        y2 = Math.max(y2, -ROWS * TILE_SIZE);
-      } else if ((player.pos.x === x1 && player.pos.y < y1) || y2 > HEIGHT) {
-        y2 = Math.min(y2, 2 * ROWS * TILE_SIZE);
-      }
-
-      x2 = (y2 - intercept) / slope;
 
       lines.push({
         p1: { x: x1, y: y1 },
