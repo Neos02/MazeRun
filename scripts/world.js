@@ -73,6 +73,7 @@ function drawWall(row, col) {
       distanceSquared(a.p1, player.pos) - distanceSquared(b.p1, player.pos)
   );
 
+  // Draw polygons for shadow effect
   polygon(wallColor, lines[0].p1, lines[0].p2, lines[1].p2, lines[1].p1);
   polygon(wallColor, lines[0].p1, lines[0].p2, lines[2].p2, lines[2].p1);
   polygon(wallColor, lines[1].p2, lines[0].p2, lines[2].p2, lines[3].p2);
@@ -81,7 +82,7 @@ function drawWall(row, col) {
 }
 
 /**
- * Draws the specified level
+ * Draws the world
  */
 function drawWorld() {
   const tileQueue = [];
@@ -91,24 +92,18 @@ function drawWorld() {
   // distance from the player
   for (let row = 0; row < ROWS; row++) {
     for (let col = 0; col < COLS; col++) {
-      tileQueue.push({ type: currentLevel[row][col], row, col });
+      tileQueue.push({ type: currentLevel[row][col], y: row, x: col });
     }
   }
 
+  // Draw tiles further from the player first
   tileQueue.sort(
     (a, b) =>
-      distanceSquared(
-        { x: b.col, y: b.row },
-        { x: playerRowCol.col, y: playerRowCol.row }
-      ) -
-      distanceSquared(
-        { x: a.col, y: a.row },
-        { x: playerRowCol.col, y: playerRowCol.row }
-      )
+      distanceSquared(b, playerRowCol) - distanceSquared(a, playerRowCol)
   );
 
   for (const tile of tileQueue) {
-    drawTile(tile.type, tile.row, tile.col);
+    drawTile(tile.type, tile.y, tile.x);
   }
 }
 

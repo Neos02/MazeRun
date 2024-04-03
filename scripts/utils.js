@@ -17,3 +17,13 @@ function distanceSquared(p1, p2) {
 function isInBounds(array, index) {
   return index >= 0 && index < array.length;
 }
+
+/**
+ * Compares two points and returns true if they are equal
+ * @param {Object} p1 the first point
+ * @param {Object} p2 the second point
+ * @returns true if the points are equal, otherwise false
+ */
+function comparePoints(p1, p2) {
+  return p1.x === p2.x && p1.y === p2.y;
+}

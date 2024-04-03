@@ -50,5 +50,5 @@ function loop(timestamp) {
 function showFps(deltaTime) {
   ctx.fillStyle = "gray";
   ctx.fontWeight = 20;
-  ctx.fillText(`FPS: ${Math.round(1000 / deltaTime)}`, 5, 15);
+  ctx.fillText(`FPS: ${Math.round(1000 / deltaTime)}`, 20, 13);
 }

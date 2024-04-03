@@ -89,8 +89,8 @@ class Player {
    */
   getRowCol = () => {
     return {
-      row: Math.floor(this.pos.y / TILE_SIZE),
-      col: Math.floor(this.pos.x / TILE_SIZE),
+      x: Math.floor(this.pos.x / TILE_SIZE),
+      y: Math.floor(this.pos.y / TILE_SIZE),
     };
   };
 }
