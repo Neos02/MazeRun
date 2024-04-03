@@ -1,3 +1,9 @@
+/**
+ * Generates a maze
+ * @param {Number} rows the number of rows in the maze grid
+ * @param {Number} cols the number of columns in the maze grid
+ * @returns a 2d array representing the maze
+ */
 function generateMaze(rows, cols) {
   const grid = new Array(rows).fill().map(() => new Array(cols).fill(WALL));
   const maze = [];
@@ -49,6 +55,15 @@ function generateMaze(rows, cols) {
   return grid;
 }
 
+/**
+ * Gets the coordinates of the surrounding tile and ensures they are
+ * in bounds
+ * @param {Number} mazeRows the number of rows in the maze
+ * @param {Number} mazeCols the number of cols in the maze
+ * @param {Number} row the row of the current cell
+ * @param {Number} col the col of the current cell
+ * @returns
+ */
 function getSurrounding(mazeRows, mazeCols, row, col) {
   const surrounding = [
     { y: row - 1, x: col },

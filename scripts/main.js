@@ -1,7 +1,5 @@
 const WIDTH = 820;
 const HEIGHT = 620;
-const ROWS = Math.round(HEIGHT / TILE_SIZE);
-const COLS = Math.round(WIDTH / TILE_SIZE);
 
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
@@ -28,5 +26,4 @@ function initCanvas(width, height) {
 document.addEventListener("keydown", keyPressed);
 document.addEventListener("keyup", keyReleased);
 initCanvas(WIDTH, HEIGHT);
-loadLevel(generateMaze(ROWS, COLS));
 window.requestAnimationFrame(loop);

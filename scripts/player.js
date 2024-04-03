@@ -1,4 +1,4 @@
-const PLAYER_SPEED = 0.1;
+const PLAYER_SPEED = 0.2;
 const PLAYER_WIDTH = 10;
 const PLAYER_HEIGHT = 10;
 
@@ -58,6 +58,8 @@ class Player {
     } else {
       this.vel.x = 0;
     }
+
+    cameraFollow(this);
   };
 
   /**

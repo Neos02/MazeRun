@@ -1,4 +1,10 @@
-const TILE_SIZE = 20;
+const TILE_SIZE = 100;
+const ROWS = 31;
+const COLS = 41;
+
+const AIR = 0;
+const SPAWN = 1;
+const WALL = 2;
 
 /**
  * Draws the tile at the row and column
@@ -9,10 +15,6 @@ const TILE_SIZE = 20;
 function drawTile(tile, row, col) {
   switch (tile) {
     case AIR:
-      break;
-    case SPAWN:
-      player.moveToRowCol(row, col);
-      currentLevel[row][col] = AIR;
       break;
     case WALL:
       drawWall(row, col);
@@ -30,8 +32,6 @@ function drawWall(row, col) {
   const wallColor = "black";
   const lines = [];
 
-  let gameCorner;
-
   // Add shadow effect to walls
   for (let xOffset = 0; xOffset <= 1; xOffset++) {
     for (let yOffset = 0; yOffset <= 1; yOffset++) {
@@ -46,17 +46,17 @@ function drawWall(row, col) {
       if (player.pos.x === x1) {
         x2 = x1;
       } else if (player.pos.x > x1) {
-        x2 = -WIDTH;
+        x2 = -ROWS * TILE_SIZE;
       } else {
-        x2 = 2 * WIDTH;
+        x2 = 2 * ROWS * TILE_SIZE;
       }
 
       y2 = slope * x2 + intercept;
 
       if ((player.pos.x === x1 && player.pos.y > y1) || y2 < 0) {
-        y2 = Math.max(y2, -HEIGHT);
+        y2 = Math.max(y2, -ROWS * TILE_SIZE);
       } else if ((player.pos.x === x1 && player.pos.y < y1) || y2 > HEIGHT) {
-        y2 = Math.min(y2, 2 * HEIGHT);
+        y2 = Math.min(y2, 2 * ROWS * TILE_SIZE);
       }
 
       x2 = (y2 - intercept) / slope;
@@ -85,14 +85,33 @@ function drawWall(row, col) {
  * Draws the world
  */
 function drawWorld() {
+  for (let row = 0; row < ROWS; row++) {
+    for (let col = 0; col < COLS; col++) {
+      if (world[row][col] === SPAWN) {
+        player.moveToRowCol(row, col);
+        world[row][col] = AIR;
+      }
+    }
+  }
+
   const tileQueue = [];
   const playerRowCol = player.getRowCol();
+  const minRowCol = {
+    x: Math.floor(cameraPos.x / TILE_SIZE),
+    y: Math.floor(cameraPos.y / TILE_SIZE),
+  };
+  const maxRowCol = {
+    x: minRowCol.x + Math.floor(WIDTH / TILE_SIZE) + 2,
+    y: minRowCol.y + Math.floor(HEIGHT / TILE_SIZE) + 2,
+  };
 
   // Because of wall shadows, the tiles need to be drawn in descending order of
   // distance from the player
-  for (let row = 0; row < ROWS; row++) {
-    for (let col = 0; col < COLS; col++) {
-      tileQueue.push({ type: currentLevel[row][col], y: row, x: col });
+  for (let row = minRowCol.y; row < maxRowCol.y; row++) {
+    for (let col = minRowCol.x; col < maxRowCol.x; col++) {
+      if (isInBounds(world, row) && isInBounds(world[row], col)) {
+        tileQueue.push({ type: world[row][col], y: row, x: col });
+      }
     }
   }
 
@@ -123,9 +142,9 @@ function playerWallCollision(nextPosition) {
       );
 
       if (
-        isInBounds(currentLevel, cornerRow) &&
-        isInBounds(currentLevel[cornerRow], cornerCol) &&
-        currentLevel[cornerRow][cornerCol] === WALL
+        isInBounds(world, cornerRow) &&
+        isInBounds(world[cornerRow], cornerCol) &&
+        world[cornerRow][cornerCol] === WALL
       ) {
         return true;
       }

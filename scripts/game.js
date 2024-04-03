@@ -6,6 +6,7 @@ const player = new Player({
     right: KEY_D,
   },
 });
+const world = generateMaze(ROWS, COLS);
 
 /**
  * Responsible for updating the game
@@ -19,8 +20,13 @@ function update(deltaTime) {
  * Responsible for drawing items to the screen
  */
 function draw() {
+  ctx.save();
+  ctx.translate(-cameraPos.x, -cameraPos.y);
+
   drawWorld();
   player.draw();
+
+  ctx.restore();
 }
 
 /**
