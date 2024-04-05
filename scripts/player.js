@@ -1,4 +1,4 @@
-const PLAYER_SPEED = 0.2;
+const PLAYER_SPEED = 0.4;
 const PLAYER_WIDTH = 10;
 const PLAYER_HEIGHT = 10;
 
@@ -33,14 +33,10 @@ class Player {
 
     if (!playerWallCollision({ x: nextPosX, y: this.pos.y })) {
       this.pos.x = nextPosX;
-    } else {
-      this.vel.x *= 0.05;
     }
 
     if (!playerWallCollision({ x: this.pos.x, y: nextPosY })) {
       this.pos.y = nextPosY;
-    } else {
-      this.vel.y *= 0.05;
     }
 
     if (this.keyStates.up && !this.keyStates.down) {

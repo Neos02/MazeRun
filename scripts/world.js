@@ -1,10 +1,11 @@
-const TILE_SIZE = 100;
+const TILE_SIZE = 150;
 const ROWS = 31;
 const COLS = 41;
 
 const AIR = 0;
 const SPAWN = 1;
 const WALL = 2;
+const FINISH = 3;
 
 /**
  * Draws the tile at the row and column
@@ -18,6 +19,9 @@ function drawTile(tile, row, col) {
       break;
     case WALL:
       drawWall(row, col);
+      break;
+    case FINISH:
+      rect(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE, "blue");
       break;
     default:
   }

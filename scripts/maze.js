@@ -52,7 +52,24 @@ function generateMaze(rows, cols) {
     grid[cell.y * 2 + 1][cell.x * 2 + 1] = AIR;
   }
 
-  grid[1][1] = SPAWN;
+  // Generate start and end
+  const sides = ["top", "left", "bottom", "right"];
+  const startSide = Math.floor(Math.random() * sides.length);
+
+  if (startSide === "top" || startSide === "bottom") {
+    const startCol = Math.floor((Math.random() * grid[0].length - 1) / 2) * 2;
+    const finishCol = Math.floor((Math.random() * grid[0].length - 1) / 2) * 2;
+
+    grid[startSide === "top" ? 1 : grid.length - 2][startCol] = SPAWN;
+    grid[startSide === "bottom" ? grid.length - 2 : 1][finishCol] = FINISH;
+  } else {
+    const startRow = Math.floor((Math.random() * grid.length - 1) / 2) * 2;
+    const finishRow = Math.floor((Math.random() * grid.length - 1) / 2) * 2;
+
+    grid[startRow][startSide === "left" ? 1 : grid[0].length - 2] = SPAWN;
+    grid[finishRow][startSide === "rightleft" ? grid[0].length - 2 : 1] =
+      FINISH;
+  }
 
   return grid;
 }
