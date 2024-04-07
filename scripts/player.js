@@ -1,6 +1,5 @@
 const PLAYER_SPEED = 0.4;
-const PLAYER_WIDTH = 10;
-const PLAYER_HEIGHT = 10;
+const PLAYER_RADIUS = 5;
 
 class Player {
   constructor({ keyMapping }) {
@@ -22,6 +21,8 @@ class Player {
       left: false,
       right: false,
     };
+
+    this.health = 10;
   }
 
   /**
@@ -31,11 +32,11 @@ class Player {
     const nextPosX = this.pos.x + this.vel.x * deltaTime;
     const nextPosY = this.pos.y + this.vel.y * deltaTime;
 
-    if (!playerWallCollision({ x: nextPosX, y: this.pos.y })) {
+    if (!wallCollision({ x: nextPosX, y: this.pos.y }, PLAYER_RADIUS)) {
       this.pos.x = nextPosX;
     }
 
-    if (!playerWallCollision({ x: this.pos.x, y: nextPosY })) {
+    if (!wallCollision({ x: this.pos.x, y: nextPosY }, PLAYER_RADIUS)) {
       this.pos.y = nextPosY;
     }
 
@@ -62,13 +63,15 @@ class Player {
    * Draws the player
    */
   draw = () => {
-    rect(
-      this.pos.x - PLAYER_WIDTH / 2,
-      this.pos.y - PLAYER_HEIGHT / 2,
-      PLAYER_WIDTH,
-      PLAYER_HEIGHT,
-      "red"
-    );
+    circle(this.pos.x, this.pos.y, PLAYER_RADIUS, "blue");
+  };
+
+  /**
+   * Damages the player
+   * @param {Number} damage the amount of health to remove from the player
+   */
+  damage = (damage) => {
+    this.health = Math.max(0, this.health - damage);
   };
 
   /**

@@ -6,7 +6,11 @@ const player = new Player({
     right: KEY_D,
   },
 });
-const world = generateMaze(ROWS, COLS);
+
+const enemies = [];
+const ENEMY_SPAWN_PERCENTAGE = 40;
+
+const world = generateMaze(ROWS, COLS, ENEMY_SPAWN_PERCENTAGE);
 
 /**
  * Responsible for updating the game
@@ -14,6 +18,10 @@ const world = generateMaze(ROWS, COLS);
  */
 function update(deltaTime) {
   player.update(deltaTime);
+
+  for (const enemy of enemies) {
+    enemy.update(deltaTime);
+  }
 }
 
 /**
@@ -23,8 +31,15 @@ function draw() {
   ctx.save();
   ctx.translate(-cameraPos.x, -cameraPos.y);
 
-  drawWorld();
+  drawGround();
+
   player.draw();
+
+  for (const enemy of enemies) {
+    enemy.draw();
+  }
+
+  drawWorld();
 
   ctx.restore();
 }
@@ -43,6 +58,7 @@ function loop(timestamp) {
   draw();
 
   showFps(deltaTime);
+  showHealth(player);
 
   prevTime = timestamp;
 
@@ -57,4 +73,14 @@ function showFps(deltaTime) {
   ctx.fillStyle = "gray";
   ctx.fontWeight = 20;
   ctx.fillText(`FPS: ${Math.round(1000 / deltaTime)}`, 20, 13);
+}
+
+/**
+ * Displays the player's health
+ * @param {Player} player the player to show health for
+ */
+function showHealth(player) {
+  ctx.fillStyle = "gray";
+  ctx.fontWeight = 20;
+  ctx.fillText(`Health: ${player.health}`, 100, 13);
 }

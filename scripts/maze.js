@@ -2,9 +2,10 @@
  * Generates a maze
  * @param {Number} rows the number of rows in the maze grid
  * @param {Number} cols the number of columns in the maze grid
+ * @param {Number} enemySpawnPercentage the percentage of tiles that should be enemy spawns from 0-100
  * @returns a 2d array representing the maze
  */
-function generateMaze(rows, cols) {
+function generateMaze(rows, cols, enemySpawnPercentage) {
   const grid = new Array(rows).fill().map(() => new Array(cols).fill(WALL));
   const maze = [];
   const frontier = [];
@@ -52,23 +53,47 @@ function generateMaze(rows, cols) {
     grid[cell.y * 2 + 1][cell.x * 2 + 1] = AIR;
   }
 
-  // Generate start and end
+  // // Generate start and end
   const sides = ["top", "left", "bottom", "right"];
   const startSide = Math.floor(Math.random() * sides.length);
 
   if (startSide === "top" || startSide === "bottom") {
-    const startCol = Math.floor((Math.random() * grid[0].length - 1) / 2) * 2;
-    const finishCol = Math.floor((Math.random() * grid[0].length - 1) / 2) * 2;
+    const startCol = randomInt(0, Math.floor(grid[0].length / 2) - 1) * 2 + 1;
+    const finishCol = randomInt(0, Math.floor(grid[0].length / 2) - 1) * 2 + 1;
 
-    grid[startSide === "top" ? 1 : grid.length - 2][startCol] = SPAWN;
-    grid[startSide === "bottom" ? grid.length - 2 : 1][finishCol] = FINISH;
+    if (startSide === "top") {
+      grid[1][startCol] = SPAWN;
+      grid[grid.length - 2][finishCol] = FINISH;
+    } else {
+      grid[grid.length - 2][startCol] = SPAWN;
+      grid[1][finishCol] = FINISH;
+    }
   } else {
-    const startRow = Math.floor((Math.random() * grid.length - 1) / 2) * 2;
-    const finishRow = Math.floor((Math.random() * grid.length - 1) / 2) * 2;
+    const startRow = randomInt(0, Math.floor(grid.length / 2)) * 2 + 1;
+    const finishRow = randomInt(0, Math.floor(grid.length / 2)) * 2 + 1;
 
-    grid[startRow][startSide === "left" ? 1 : grid[0].length - 2] = SPAWN;
-    grid[finishRow][startSide === "rightleft" ? grid[0].length - 2 : 1] =
-      FINISH;
+    if (startSide === "left") {
+      grid[startRow][1] = SPAWN;
+      grid[finishRow][grid[0].length - 2] = FINISH;
+    } else {
+      grid[startRow][grid[0].length - 2] = SPAWN;
+      grid[finishRow][1] = FINISH;
+    }
+  }
+
+  let enemySpawnerCount = Math.round(
+    mazeRows * mazeCols * (enemySpawnPercentage / 100)
+  );
+  while (maze.length && enemySpawnerCount > 0) {
+    const tileIndex = Math.floor(Math.random() * maze.length);
+    const tile = maze.splice(tileIndex, 1)[0];
+    const row = tile.y * 2 + 1;
+    const col = tile.x * 2 + 1;
+
+    if (grid[row][col] === AIR) {
+      grid[row][col] = ENEMY_SPAWN;
+      enemySpawnerCount--;
+    }
   }
 
   return grid;

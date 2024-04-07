@@ -27,3 +27,13 @@ function isInBounds(array, index) {
 function comparePoints(p1, p2) {
   return p1.x === p2.x && p1.y === p2.y;
 }
+
+/**
+ * Gets a random integer between the min (inclusive) and the max (exclusive)
+ * @param {Number} min the min value (inclusive)
+ * @param {Number} max the max value (exclusive)
+ * @returns A random integer
+ */
+function randomInt(min, max) {
+  return Math.floor(Math.random() * (max - min) + min);
+}
