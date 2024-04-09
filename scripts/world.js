@@ -8,6 +8,10 @@ const WALL = 2;
 const FINISH = 3;
 const ENEMY_SPAWN = 4;
 
+const WALL_COLOR_TOP_BOTTOM = "rgb(30, 30, 40)";
+const WALL_COLOR_LEFT_RIGHT = "rgb(40, 40, 50)";
+const GROUND_COLOR = "lightgray";
+
 /**
  * Draws the tile at the row and column
  * @param {Number} tile the tile to draw
@@ -25,7 +29,7 @@ function handleTile(tile, row, col) {
       rect(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE, "blue");
       break;
     case ENEMY_SPAWN:
-      handleEnemySpawn(row, col);
+      spawnEnemy(row, col);
       break;
     default:
   }
@@ -35,8 +39,6 @@ function handleTile(tile, row, col) {
  * Draws the world
  */
 function drawWorld() {
-  spawnPlayer();
-
   const tileQueue = [];
   const playerRowCol = player.getRowCol();
   const minRowCol = {
@@ -120,25 +122,26 @@ function drawWall(row, col) {
   );
 
   // Draw polygons for shadow effect
-  const wallColorTopBottom = "rgb(30, 30, 40)";
-  const wallColorLeftRight = "rgb(40, 40, 50)";
-
   rect(
     col * TILE_SIZE,
     row * TILE_SIZE,
     TILE_SIZE,
     TILE_SIZE,
-    wallColorTopBottom
+    WALL_COLOR_TOP_BOTTOM
   );
   polygon(
-    lines[0].p1.x === lines[2].p1.x ? wallColorLeftRight : wallColorTopBottom,
+    lines[0].p1.x === lines[2].p1.x
+      ? WALL_COLOR_LEFT_RIGHT
+      : WALL_COLOR_TOP_BOTTOM,
     lines[0].p1,
     lines[0].p2,
     lines[2].p2,
     lines[2].p1
   );
   polygon(
-    lines[0].p1.x === lines[2].p1.x ? wallColorTopBottom : wallColorLeftRight,
+    lines[0].p1.x === lines[2].p1.x
+      ? WALL_COLOR_TOP_BOTTOM
+      : WALL_COLOR_LEFT_RIGHT,
     lines[0].p1,
     lines[0].p2,
     lines[1].p2,
@@ -147,7 +150,7 @@ function drawWall(row, col) {
 }
 
 function drawGround() {
-  rect(0, 0, COLS * TILE_SIZE, ROWS * TILE_SIZE, "lightgray");
+  rect(0, 0, COLS * TILE_SIZE, ROWS * TILE_SIZE, GROUND_COLOR);
 }
 
 /**
@@ -175,7 +178,7 @@ function spawnPlayer() {
  * @param {Number} row the row of the tile
  * @param {Number} col the spawn of the  tile
  */
-function handleEnemySpawn(row, col) {
+function spawnEnemy(row, col) {
   if (
     world[row][col] === ENEMY_SPAWN &&
     !enemies.filter((e) => e.spawnPos.x === col && e.spawnPos.y === row).length

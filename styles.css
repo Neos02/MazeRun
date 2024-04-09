@@ -1,14 +1,70 @@
+@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "VT323", monospace;
 }
 
+button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.1s ease-in;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+.game-object,
 #gameCanvas {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 820px;
+  height: 620px;
   border: 1px solid black;
   border-radius: 12px;
+}
+
+#mainMenu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 25%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 3rem;
+  text-transform: uppercase;
+}
+
+#mainMenu button {
+  padding: 1.5rem 5rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: all 0.1s ease-in;
+}
+
+#gameOver,
+#finish {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  background-color: black;
+  color: white;
+  text-transform: uppercase;
+}
+
+.hidden {
+  display: none !important;
 }

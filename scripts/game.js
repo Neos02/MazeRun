@@ -1,3 +1,8 @@
+const STATE_MAIN_MENU = 0;
+const STATE_PLAYING = 1;
+const STATE_GAME_OVER = 2;
+const STATE_WIN = 3;
+
 const player = new Player({
   keyMapping: {
     up: KEY_W,
@@ -10,14 +15,16 @@ const player = new Player({
 const ENEMY_SPAWN_PERCENTAGE = 40;
 
 let enemies = [];
-let playerStartCoords = null;
 let world = generateMaze(ROWS, COLS, ENEMY_SPAWN_PERCENTAGE);
+let gameState = STATE_MAIN_MENU;
 
 /**
  * Responsible for updating the game
  * @param {Number} deltaTime the time in milliseconds since the last frame
  */
 function update(deltaTime) {
+  spawnPlayer();
+
   player.update(deltaTime);
 
   for (const enemy of enemies) {
@@ -25,7 +32,13 @@ function update(deltaTime) {
   }
 
   if (player.health <= 0) {
-    reset();
+    lose();
+  }
+
+  const playerRowCol = player.getRowCol();
+
+  if (world[playerRowCol.y][playerRowCol.x] === FINISH) {
+    win();
   }
 }
 
@@ -50,17 +63,48 @@ function draw() {
 }
 
 /**
+ * Starts the game
+ */
+function start() {
+  mainMenu.classList.add("hidden");
+
+  setTimeout(() => {
+    gameState = STATE_PLAYING;
+  }, 1000);
+}
+
+/**
+ * Goes to the game over screen
+ */
+function lose() {
+  gameOver.classList.remove("hidden");
+
+  gameState = STATE_GAME_OVER;
+}
+
+function win() {
+  finish.classList.remove("hidden");
+
+  gameState = STATE_WIN;
+}
+
+/**
  * Resets the game
  */
 function reset() {
+  gameOver.classList.add("hidden");
+  finish.classList.add("hidden");
+
+  gameState = STATE_PLAYING;
+
   for (const enemy of enemies) {
     enemy.destroy();
   }
 
   enemies = [];
 
-  player.moveToRowCol(playerStartCoords.y, playerStartCoords.x);
   player.health = PLAYER_MAX_HEALTH;
+  world = generateMaze(ROWS, COLS, ENEMY_SPAWN_PERCENTAGE);
 }
 
 /**
@@ -71,13 +115,15 @@ function reset() {
 function loop(timestamp) {
   const deltaTime = timestamp - prevTime;
 
-  ctx.clearRect(0, 0, WIDTH, HEIGHT);
+  if (gameState === STATE_PLAYING) {
+    ctx.clearRect(0, 0, WIDTH, HEIGHT);
 
-  update(deltaTime);
-  draw();
+    update(deltaTime);
+    draw();
 
-  showFps(deltaTime);
-  showHealth(player);
+    showFps(deltaTime);
+    showHealth(player);
+  }
 
   prevTime = timestamp;
 

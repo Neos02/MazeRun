@@ -7,9 +7,27 @@
     <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
   </head>
   <body>
-    <canvas id="gameCanvas">
+    <canvas class="game-object" id="gameCanvas">
       Your browser does not support HTML5 canvas.
     </canvas>
+
+    <div class="game-object" id="mainMenu">
+      <h1 class="title">Maze Run</h1>
+
+      <button onclick="start()">Play</button>
+    </div>
+
+    <div class="game-object hidden" id="gameOver">
+      <h1>Game Over</h1>
+
+      <button onclick="reset()">Play Again</button>
+    </div>
+
+    <div class="game-object hidden" id="finish">
+      <h1>You Win!</h1>
+
+      <button onclick="reset()">Play Again</button>
+    </div>
 
     <script type="text/javascript" src="./scripts/input.js"></script>
     <script type="text/javascript" src="./scripts/camera.js"></script>
