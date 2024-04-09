@@ -7,10 +7,11 @@ const player = new Player({
   },
 });
 
-const enemies = [];
 const ENEMY_SPAWN_PERCENTAGE = 40;
 
-const world = generateMaze(ROWS, COLS, ENEMY_SPAWN_PERCENTAGE);
+let enemies = [];
+let playerStartCoords = null;
+let world = generateMaze(ROWS, COLS, ENEMY_SPAWN_PERCENTAGE);
 
 /**
  * Responsible for updating the game
@@ -21,6 +22,10 @@ function update(deltaTime) {
 
   for (const enemy of enemies) {
     enemy.update(deltaTime);
+  }
+
+  if (player.health <= 0) {
+    reset();
   }
 }
 
@@ -42,6 +47,20 @@ function draw() {
   drawWorld();
 
   ctx.restore();
+}
+
+/**
+ * Resets the game
+ */
+function reset() {
+  for (const enemy of enemies) {
+    enemy.destroy();
+  }
+
+  enemies = [];
+
+  player.moveToRowCol(playerStartCoords.y, playerStartCoords.x);
+  player.health = PLAYER_MAX_HEALTH;
 }
 
 /**

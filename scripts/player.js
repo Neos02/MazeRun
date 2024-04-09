@@ -1,5 +1,6 @@
 const PLAYER_SPEED = 0.4;
 const PLAYER_RADIUS = 5;
+const PLAYER_MAX_HEALTH = 10;
 
 class Player {
   constructor({ keyMapping }) {
@@ -22,7 +23,7 @@ class Player {
       right: false,
     };
 
-    this.health = 10;
+    this.health = PLAYER_MAX_HEALTH;
   }
 
   /**

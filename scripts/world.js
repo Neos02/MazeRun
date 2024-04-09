@@ -158,6 +158,11 @@ function spawnPlayer() {
   for (let row = 0; row < ROWS; row++) {
     for (let col = 0; col < COLS; col++) {
       if (world[row][col] === SPAWN) {
+        playerStartCoords = {
+          x: col,
+          y: row,
+        };
+
         player.moveToRowCol(row, col);
         world[row][col] = AIR;
       }
