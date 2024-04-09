@@ -1,6 +1,6 @@
 const TILE_SIZE = 150;
 const ROWS = 31;
-const COLS = 41;
+const COLS = 31;
 
 const AIR = 0;
 const SPAWN = 1;
@@ -78,10 +78,10 @@ function drawWorld() {
  */
 function drawWall(row, col) {
   const lines = [];
-  const minY = -ROWS * TILE_SIZE;
-  const maxY = 2 * ROWS * TILE_SIZE;
-  const minX = -COLS * TILE_SIZE;
-  const maxX = 2 * COLS * TILE_SIZE;
+  const minY = -10 * HEIGHT;
+  const maxY = 11 * HEIGHT;
+  const minX = -10 * WIDTH;
+  const maxX = 11 * WIDTH;
 
   // Add shadow effect to walls
   for (let xOffset = 0; xOffset <= 1; xOffset++) {
