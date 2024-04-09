@@ -5,6 +5,12 @@ const mainMenu = document.getElementById("mainMenu");
 const gameOver = document.getElementById("gameOver");
 const finish = document.getElementById("finish");
 
+const music = new Audio("../music/track0.mp3");
+const clickSound = new Audio("../sounds/click.mp3");
+const deathSound = new Audio("../sounds/death.mp3");
+const countdownSound = new Audio("../sounds/countdown.mp3");
+const winSound = new Audio("../sounds/win.mp3");
+
 const WIDTH = parseFloat(canvas.clientWidth);
 const HEIGHT = parseFloat(canvas.clientHeight);
 
@@ -24,9 +30,22 @@ function initCanvas(width, height) {
   ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
 }
 
+/**
+ * Configure sound properties
+ */
+function configureSounds() {
+  music.loop = true;
+
+  countdownSound.addEventListener("ended", () => {
+    music.play();
+    gameState = STATE_PLAYING;
+  });
+}
+
 document.addEventListener("keydown", keyPressed);
 document.addEventListener("keyup", keyReleased);
 initCanvas(WIDTH, HEIGHT);
+configureSounds();
 window.requestAnimationFrame(loop);
 ctx.clearRect(0, 0, WIDTH, HEIGHT);
 

@@ -7,9 +7,16 @@
     <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
   </head>
   <body>
-    <canvas class="game-object" id="gameCanvas">
-      Your browser does not support HTML5 canvas.
-    </canvas>
+    <div class="game-object" id="game">
+      <canvas class="game-object" id="gameCanvas">
+        Your browser does not support HTML5 canvas.
+      </canvas>
+
+      <div id="health">
+        <div id="healthbar"></div>
+        <span id="healthCount">10 / 10</span>
+      </div>
+    </div>
 
     <div class="game-object" id="mainMenu">
       <h1 class="title">Maze Run</h1>

@@ -66,17 +66,20 @@ function draw() {
  * Starts the game
  */
 function start() {
+  clickSound.play();
+
   mainMenu.classList.add("hidden");
 
-  setTimeout(() => {
-    gameState = STATE_PLAYING;
-  }, 1000);
+  countdownSound.play();
 }
 
 /**
  * Goes to the game over screen
  */
 function lose() {
+  music.pause();
+  deathSound.play();
+
   gameOver.classList.remove("hidden");
 
   gameState = STATE_GAME_OVER;
@@ -86,6 +89,9 @@ function lose() {
  * Goes to the win screen
  */
 function win() {
+  music.pause();
+  winSound.play();
+
   finish.classList.remove("hidden");
 
   gameState = STATE_WIN;
@@ -95,10 +101,10 @@ function win() {
  * Resets the game
  */
 function reset() {
+  clickSound.play();
+
   gameOver.classList.add("hidden");
   finish.classList.add("hidden");
-
-  gameState = STATE_PLAYING;
 
   for (const enemy of enemies) {
     enemy.destroy();
@@ -108,6 +114,11 @@ function reset() {
 
   player.health = PLAYER_MAX_HEALTH;
   world = generateMaze(ROWS, COLS, ENEMY_SPAWN_PERCENTAGE);
+
+  update(10);
+  draw();
+
+  countdownSound.play();
 }
 
 /**

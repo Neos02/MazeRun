@@ -73,6 +73,15 @@ class Player {
    */
   damage = (damage) => {
     this.health = Math.max(0, this.health - damage);
+
+    const healthPercent = (this.health / PLAYER_MAX_HEALTH) * 100;
+
+    document.getElementById(
+      "healthbar"
+    ).style.background = `linear-gradient(to right, red 0%, red ${healthPercent}%, white ${healthPercent}%)`;
+    document.getElementById(
+      "healthCount"
+    ).innerText = `${this.health} / ${PLAYER_MAX_HEALTH}`;
   };
 
   /**
