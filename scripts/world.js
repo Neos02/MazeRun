@@ -26,7 +26,7 @@ function handleTile(tile, row, col) {
       drawWall(row, col);
       break;
     case FINISH:
-      rect(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE, "blue");
+      drawFinish(row, col);
       break;
     case ENEMY_SPAWN:
       spawnEnemy(row, col);
@@ -147,6 +147,31 @@ function drawWall(row, col) {
     lines[1].p2,
     lines[1].p1
   );
+}
+
+/**
+ * Draw the finish tile
+ * @param {Number} row the row to draw the finish at
+ * @param {Number} col the column to draw the finish at
+ */
+function drawFinish(row, col) {
+  const xStart = col * TILE_SIZE;
+  const yStart = row * TILE_SIZE;
+  const numFinishTiles = 8;
+  const finishTileSize = TILE_SIZE / numFinishTiles;
+
+  for (let y = 0; y < numFinishTiles; y++) {
+    for (let x = 0; x < numFinishTiles; x++) {
+      const color = y % 2 === x % 2 ? "white" : "black";
+      rect(
+        xStart + x * finishTileSize,
+        yStart + y * finishTileSize,
+        finishTileSize,
+        finishTileSize,
+        color
+      );
+    }
+  }
 }
 
 function drawGround() {

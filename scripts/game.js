@@ -82,6 +82,9 @@ function lose() {
   gameState = STATE_GAME_OVER;
 }
 
+/**
+ * Goes to the win screen
+ */
 function win() {
   finish.classList.remove("hidden");
 

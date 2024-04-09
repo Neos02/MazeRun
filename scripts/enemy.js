@@ -104,7 +104,7 @@ class Enemy {
       return;
     }
 
-    circle(this.pos.x, this.pos.y, ENEMY_RADIUS, "orange");
+    circle(this.pos.x, this.pos.y, ENEMY_RADIUS, "red");
   };
 
   /**
