@@ -27,3 +27,4 @@ I used resources from various different places. Links to everything can be found
 ### Images
 
 - [Background](https://stock.adobe.com/images/vector-seamless-pattern-in-the-form-of-a-labyrinth/104967278?start-checkout=1&content-id=104967278)
+- [Favicon](https://www.flaticon.com/free-icon/maze_3064079)
