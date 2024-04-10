@@ -75,10 +75,10 @@ function drawWorld() {
  */
 function drawWall(row, col) {
   const lines = [];
-  const minY = -10 * HEIGHT;
-  const maxY = 11 * HEIGHT;
-  const minX = -10 * WIDTH;
-  const maxX = 11 * WIDTH;
+  const minY = -10 * rows * HEIGHT;
+  const maxY = 11 * rows * HEIGHT;
+  const minX = -10 * cols * WIDTH;
+  const maxX = 11 * cols * WIDTH;
 
   // Add shadow effect to walls
   for (let xOffset = 0; xOffset <= 1; xOffset++) {
