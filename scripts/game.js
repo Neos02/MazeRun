@@ -24,6 +24,7 @@ let startTime;
  */
 function update(deltaTime) {
   spawnPlayer();
+  spawnEnemies();
 
   player.update(deltaTime);
 

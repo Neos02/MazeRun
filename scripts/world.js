@@ -28,9 +28,6 @@ function handleTile(tile, row, col) {
     case FINISH:
       drawFinish(row, col);
       break;
-    case ENEMY_SPAWN:
-      spawnEnemy(row, col);
-      break;
     default:
   }
 }
@@ -199,25 +196,28 @@ function spawnPlayer() {
 }
 
 /**
- * Handles enemy spawning for a tile
- * @param {Number} row the row of the tile
- * @param {Number} col the spawn of the  tile
+ * Spawns enemies in
  */
-function spawnEnemy(row, col) {
-  if (
-    world[row][col] === ENEMY_SPAWN &&
-    !enemies.filter((e) => e.spawnPos.x === col && e.spawnPos.y === row).length
-  ) {
-    const newEnemy = new Enemy(
-      {
-        x: col * TILE_SIZE + TILE_SIZE / 2,
-        y: row * TILE_SIZE + TILE_SIZE / 2,
-      },
-      player,
-      true
-    );
+function spawnEnemies() {
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      if (
+        world[row][col] === ENEMY_SPAWN &&
+        !enemies.filter((e) => e.spawnPos.x === col && e.spawnPos.y === row)
+          .length
+      ) {
+        const newEnemy = new Enemy(
+          {
+            x: col * TILE_SIZE + TILE_SIZE / 2,
+            y: row * TILE_SIZE + TILE_SIZE / 2,
+          },
+          player,
+          true
+        );
 
-    enemies.push(newEnemy);
+        enemies.push(newEnemy);
+      }
+    }
   }
 }
 
