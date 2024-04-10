@@ -29,15 +29,36 @@ class Enemy {
       return;
     }
 
-    const nextPosX = this.pos.x + this.vel.x * deltaTime;
-    const nextPosY = this.pos.y + this.vel.y * deltaTime;
+    const nextPosX = {
+      x: this.pos.x + this.vel.x * deltaTime,
+      y: this.pos.y,
+    };
+    const nextPosY = {
+      x: this.pos.x,
+      y: this.pos.y + this.vel.y * deltaTime,
+    };
 
-    if (!wallCollision({ x: nextPosX, y: this.pos.y }, ENEMY_RADIUS)) {
-      this.pos.x = nextPosX;
+    let hasEnemyCollisionX = false;
+    let hasEnemyCollisionY = false;
+
+    for (const enemy of enemies) {
+      if (enemy !== this) {
+        if (this.enemyCollision(nextPosX, enemy)) {
+          hasEnemyCollisionX = true;
+        }
+
+        if (this.enemyCollision(nextPosY, enemy)) {
+          hasEnemyCollisionY = true;
+        }
+      }
     }
 
-    if (!wallCollision({ x: this.pos.x, y: nextPosY }, ENEMY_RADIUS)) {
-      this.pos.y = nextPosY;
+    if (!wallCollision(nextPosX, ENEMY_RADIUS) && !hasEnemyCollisionX) {
+      this.pos.x = nextPosX.x;
+    }
+
+    if (!wallCollision(nextPosY, ENEMY_RADIUS) && !hasEnemyCollisionY) {
+      this.pos.y = nextPosY.y;
     }
 
     if (
@@ -136,5 +157,15 @@ class Enemy {
       x: Math.floor(this.pos.x / TILE_SIZE),
       y: Math.floor(this.pos.y / TILE_SIZE),
     };
+  };
+
+  /**
+   * Detects if this enemy is colliding with another
+   * @param {Object} nextPos the next position of this enemy
+   * @param {Number} enemy the enemy to check for a collision with
+   * @returns true if collision, otherwise false
+   */
+  enemyCollision = (nextPos, enemy) => {
+    return distanceSquared(nextPos, enemy.pos) < (2 * ENEMY_RADIUS) ** 2;
   };
 }
