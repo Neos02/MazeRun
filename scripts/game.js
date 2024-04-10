@@ -12,10 +12,8 @@ const player = new Player({
   },
 });
 
-const ENEMY_SPAWN_PERCENTAGE = 40;
-
 let enemies = [];
-let world = generateMaze(ROWS, COLS, ENEMY_SPAWN_PERCENTAGE);
+let world = generateMaze(rows, cols, 40);
 let gameState = STATE_MAIN_MENU;
 
 /**
@@ -63,12 +61,27 @@ function draw() {
 }
 
 /**
+ * Goes to the choose difficulty screen
+ */
+function chooseDifficulty() {
+  mainMenu.classList.add("hidden");
+  difficultySelect.classList.remove("hidden");
+}
+
+/**
  * Starts the game
  */
-function start() {
-  clickSound.play();
+function start(mazeSize = 31, enemySpawnChance = 40) {
+  difficultySelect.classList.add("hidden");
 
-  mainMenu.classList.add("hidden");
+  rows = mazeSize;
+  cols = mazeSize;
+  enemySpawnPercentage = enemySpawnChance;
+  world = generateMaze(mazeSize, mazeSize, enemySpawnChance);
+  update(10);
+  draw();
+
+  clickSound.play();
 
   countdownSound.play();
 }
@@ -105,6 +118,9 @@ function reset() {
 
   gameOver.classList.add("hidden");
   finish.classList.add("hidden");
+  mainMenu.classList.remove("hidden");
+
+  gameState = STATE_MAIN_MENU;
 
   for (const enemy of enemies) {
     enemy.destroy();
@@ -113,12 +129,10 @@ function reset() {
   enemies = [];
 
   player.health = PLAYER_MAX_HEALTH;
-  world = generateMaze(ROWS, COLS, ENEMY_SPAWN_PERCENTAGE);
+  world = generateMaze(rows, cols, 0);
 
   update(10);
   draw();
-
-  countdownSound.play();
 }
 
 /**

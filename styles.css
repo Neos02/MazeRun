@@ -7,6 +7,10 @@
   font-family: "VT323", monospace;
 }
 
+body {
+  background-image: url("./images/background.jpeg");
+}
+
 button {
   padding: 0.5rem 1rem;
   border: none;
@@ -32,7 +36,8 @@ button:hover {
   border-radius: 12px;
 }
 
-#mainMenu {
+#mainMenu,
+#difficultySelect {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -44,13 +49,10 @@ button:hover {
   text-transform: uppercase;
 }
 
-#mainMenu button {
+#mainMenu button,
+#difficultySelect button {
   padding: 1.5rem 5rem;
-  border: none;
-  border-radius: 0.5rem;
   font-size: 2rem;
-  cursor: pointer;
-  transition: all 0.1s ease-in;
 }
 
 #gameOver,

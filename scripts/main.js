@@ -2,6 +2,7 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
 const mainMenu = document.getElementById("mainMenu");
+const difficultySelect = document.getElementById("difficultySelect");
 const gameOver = document.getElementById("gameOver");
 const finish = document.getElementById("finish");
 

@@ -1,6 +1,4 @@
 const TILE_SIZE = 150;
-const ROWS = 31;
-const COLS = 31;
 
 const AIR = 0;
 const SPAWN = 1;
@@ -12,6 +10,8 @@ const WALL_COLOR_TOP_BOTTOM = "rgb(30, 30, 40)";
 const WALL_COLOR_LEFT_RIGHT = "rgb(40, 40, 50)";
 const GROUND_COLOR = "lightgray";
 
+let rows = 31;
+let cols = 31;
 /**
  * Draws the tile at the row and column
  * @param {Number} tile the tile to draw
@@ -103,7 +103,7 @@ function drawWall(row, col) {
         y2 = Math.max(Math.min(slope * x2 + intercept, maxY), minY);
 
         if (slope === 0) {
-          x2 = player.pos.x > x1 ? -ROWS * TILE_SIZE : 2 * ROWS * TILE_SIZE;
+          x2 = player.pos.x > x1 ? -rows * TILE_SIZE : 2 * rows * TILE_SIZE;
         } else {
           x2 = (y2 - intercept) / slope;
         }
@@ -175,7 +175,7 @@ function drawFinish(row, col) {
 }
 
 function drawGround() {
-  rect(0, 0, COLS * TILE_SIZE, ROWS * TILE_SIZE, GROUND_COLOR);
+  rect(0, 0, cols * TILE_SIZE, rows * TILE_SIZE, GROUND_COLOR);
 }
 
 /**
@@ -183,8 +183,8 @@ function drawGround() {
  */
 function spawnPlayer() {
   // Spawn player in
-  for (let row = 0; row < ROWS; row++) {
-    for (let col = 0; col < COLS; col++) {
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
       if (world[row][col] === SPAWN) {
         playerStartCoords = {
           x: col,
