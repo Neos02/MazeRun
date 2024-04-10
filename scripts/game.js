@@ -16,6 +16,8 @@ let enemies = [];
 let world = generateMaze(rows, cols, 40);
 let gameState = STATE_MAIN_MENU;
 
+let startTime;
+
 /**
  * Responsible for updating the game
  * @param {Number} deltaTime the time in milliseconds since the last frame
@@ -64,6 +66,8 @@ function draw() {
  * Goes to the choose difficulty screen
  */
 function chooseDifficulty() {
+  clickSound.play();
+
   mainMenu.classList.add("hidden");
   difficultySelect.classList.remove("hidden");
 }
@@ -72,6 +76,8 @@ function chooseDifficulty() {
  * Starts the game
  */
 function start(mazeSize = 31, enemySpawnChance = 40) {
+  clickSound.play();
+
   difficultySelect.classList.add("hidden");
 
   rows = mazeSize;
@@ -80,8 +86,6 @@ function start(mazeSize = 31, enemySpawnChance = 40) {
   world = generateMaze(mazeSize, mazeSize, enemySpawnChance);
   update(10);
   draw();
-
-  clickSound.play();
 
   countdownSound.play();
 }
@@ -104,6 +108,8 @@ function lose() {
 function win() {
   music.pause();
   winSound.play();
+
+  time.innerText = `Your Time: ${formatMillis(Date.now() - startTime)}`;
 
   finish.classList.remove("hidden");
 

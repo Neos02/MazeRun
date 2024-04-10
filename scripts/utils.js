@@ -37,3 +37,12 @@ function comparePoints(p1, p2) {
 function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
+
+/**
+ * Formats milliseconds into a human readable time
+ * @param {Number} millis the number of milliseconds to format
+ * @returns A formatted time string
+ */
+function formatMillis(millis) {
+  return new Date(millis).toISOString().slice(11, -1);
+}

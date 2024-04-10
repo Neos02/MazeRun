@@ -9,6 +9,8 @@ const finish = document.getElementById("finish");
 const healthBar = document.getElementById("healthBar");
 const healthCount = document.getElementById("healthCount");
 
+const time = document.getElementById("time");
+
 const music = new Audio("../music/track0.mp3");
 const clickSound = new Audio("../sounds/click.mp3");
 const deathSound = new Audio("../sounds/death.mp3");
@@ -44,6 +46,7 @@ function configureSounds() {
   countdownSound.addEventListener("ended", () => {
     music.play();
     gameState = STATE_PLAYING;
+    startTime = Date.now();
   });
 }
 
