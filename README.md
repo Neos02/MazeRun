@@ -2,7 +2,7 @@
 
 This project was started for a Game Development class at my University.
 
-You can play the game [here](https://neos02.github.io)!
+You can play the game [here](https://neos02.github.io/MazeRun)!
 
 ## How to Play
 
