@@ -75,7 +75,14 @@ class Player {
    * @param {Number} damage the amount of health to remove from the player
    */
   damage = (damage) => {
+    const beforeHealth = this.health;
+
     this.health = Math.max(0, this.health - damage);
+
+    if (this.health < beforeHealth) {
+      damageSound.currentTime = 0;
+      damageSound.play();
+    }
 
     const healthPercent = (this.health / PLAYER_MAX_HEALTH) * 100;
     let color = "lime";
