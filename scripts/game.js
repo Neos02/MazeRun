@@ -136,7 +136,6 @@ function loop(timestamp) {
     draw();
 
     showFps(deltaTime);
-    showHealth(player);
   }
 
   prevTime = timestamp;
@@ -152,14 +151,4 @@ function showFps(deltaTime) {
   ctx.fillStyle = "gray";
   ctx.fontWeight = 20;
   ctx.fillText(`FPS: ${Math.round(1000 / deltaTime)}`, 20, 13);
-}
-
-/**
- * Displays the player's health
- * @param {Player} player the player to show health for
- */
-function showHealth(player) {
-  ctx.fillStyle = "gray";
-  ctx.fontWeight = 20;
-  ctx.fillText(`Health: ${player.health}`, 100, 13);
 }

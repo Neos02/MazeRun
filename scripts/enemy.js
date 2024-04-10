@@ -1,7 +1,7 @@
 const ENEMY_SPEED = 0.1;
 const ENEMY_TRACKING_DISTANCE = 1;
 const ENEMY_RADIUS = 10;
-const ENEMY_COOLDOWN_SECONDS = 2;
+const ENEMY_COOLDOWN_SECONDS = 1;
 
 class Enemy {
   constructor(pos, playerToTrack, active = true) {

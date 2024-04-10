@@ -5,6 +5,9 @@ const mainMenu = document.getElementById("mainMenu");
 const gameOver = document.getElementById("gameOver");
 const finish = document.getElementById("finish");
 
+const healthBar = document.getElementById("healthBar");
+const healthCount = document.getElementById("healthCount");
+
 const music = new Audio("../music/track0.mp3");
 const clickSound = new Audio("../sounds/click.mp3");
 const deathSound = new Audio("../sounds/death.mp3");

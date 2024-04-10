@@ -64,6 +64,9 @@ class Player {
    * Draws the player
    */
   draw = () => {
+    // Force a ui update by calling damage with 0
+    this.damage(0);
+
     circle(this.pos.x, this.pos.y, PLAYER_RADIUS, "blue");
   };
 
@@ -75,13 +78,18 @@ class Player {
     this.health = Math.max(0, this.health - damage);
 
     const healthPercent = (this.health / PLAYER_MAX_HEALTH) * 100;
+    let color = "lime";
 
-    document.getElementById(
-      "healthbar"
-    ).style.background = `linear-gradient(to right, red 0%, red ${healthPercent}%, white ${healthPercent}%)`;
-    document.getElementById(
-      "healthCount"
-    ).innerText = `${this.health} / ${PLAYER_MAX_HEALTH}`;
+    if (this.health <= 0.25 * PLAYER_MAX_HEALTH) {
+      color = "red";
+    } else if (this.health <= 0.5 * PLAYER_MAX_HEALTH) {
+      color = "orange";
+    } else if (this.health <= 0.75 * PLAYER_MAX_HEALTH) {
+      color = "yellow";
+    }
+
+    healthBar.style.background = `linear-gradient(to right, ${color} 0%, ${color} ${healthPercent}%, lightgray ${healthPercent}%)`;
+    healthCount.innerText = `${this.health} / ${PLAYER_MAX_HEALTH}`;
   };
 
   /**
