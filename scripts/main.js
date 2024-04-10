@@ -11,13 +11,13 @@ const healthCount = document.getElementById("healthCount");
 
 const time = document.getElementById("time");
 
-const music = new Audio("../assets/music/track0.mp3");
+const music = document.getElementById("music");
 
-const clickSound = new Audio("../assets/sounds/click.mp3");
-const deathSound = new Audio("../assets/sounds/death.mp3");
-const damageSound = new Audio("../assets/sounds/damage.mp3");
-const countdownSound = new Audio("../assets/sounds/countdown.mp3");
-const winSound = new Audio("../assets/sounds/win.mp3");
+const clickSound = document.getElementById("clickSound");
+const deathSound = document.getElementById("deathSound");
+const damageSound = document.getElementById("damageSound");
+const countdownSound = document.getElementById("countdownSound");
+const winSound = document.getElementById("winSound");
 
 const WIDTH = parseFloat(canvas.clientWidth);
 const HEIGHT = parseFloat(canvas.clientHeight);
