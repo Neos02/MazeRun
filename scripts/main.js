@@ -49,6 +49,20 @@ function configureSounds() {
     gameState = STATE_PLAYING;
     startTime = Date.now();
   });
+
+  setVolume(0.1);
+}
+
+/**
+ * Set the volume of all sounds
+ */
+function setVolume(volume) {
+  music.volume = volume;
+  clickSound.volume = volume;
+  deathSound.volume = volume;
+  damageSound.volume = volume;
+  countdownSound.volume = volume;
+  winSound.volume = volume;
 }
 
 document.addEventListener("keydown", keyPressed);

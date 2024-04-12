@@ -23,8 +23,8 @@ let startTime;
  * @param {Number} deltaTime the time in milliseconds since the last frame
  */
 function update(deltaTime) {
-  spawnPlayer();
   spawnEnemies();
+  spawnPlayer();
 
   player.update(deltaTime);
 

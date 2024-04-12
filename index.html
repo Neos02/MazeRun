@@ -7,45 +7,56 @@
     <link rel="icon" href="./assets/images/favicon.ico" />
   </head>
   <body>
-    <div class="game-object" id="game">
-      <canvas class="game-object" id="gameCanvas">
-        Your browser does not support HTML5 canvas.
-      </canvas>
+    <div class="game-object">
+      <div class="game-object" id="game">
+        <canvas class="game-object" id="gameCanvas">
+          Your browser does not support HTML5 canvas.
+        </canvas>
 
-      <div id="health">
-        <div id="healthBar"></div>
-        <span id="healthCount">10 / 10</span>
+        <div id="health">
+          <div id="healthBar"></div>
+          <span id="healthCount">10 / 10</span>
+        </div>
       </div>
-    </div>
 
-    <div class="game-object" id="mainMenu">
-      <h1 class="title">Maze Run</h1>
+      <div class="game-object" id="mainMenu">
+        <h1 class="title">Maze Run</h1>
 
-      <button onclick="chooseDifficulty()">Play</button>
-    </div>
-
-    <div class="game-object hidden" id="difficultySelect">
-      <h1>Choose Difficulty</h1>
-
-      <div id="difficultyBtns">
-        <button onclick="start(11, 40)">Easy</button>
-        <button onclick="start(31, 50)">Medium</button>
-        <button onclick="start(51, 60)">Hard</button>
+        <button onclick="chooseDifficulty()">Play</button>
       </div>
-    </div>
 
-    <div class="game-object hidden" id="gameOver">
-      <h1>Game Over</h1>
+      <div class="game-object hidden" id="difficultySelect">
+        <h1>Choose Difficulty</h1>
 
-      <button onclick="reset()">Play Again</button>
-    </div>
+        <div id="difficultyBtns">
+          <button onclick="start(11, 40)">Easy</button>
+          <button onclick="start(31, 50)">Medium</button>
+          <button onclick="start(51, 60)">Hard</button>
+        </div>
+      </div>
 
-    <div class="game-object hidden" id="finish">
-      <h1>You Win!</h1>
+      <div class="game-object hidden" id="gameOver">
+        <h1>Game Over</h1>
 
-      <p id="time">Your Time: 00:00:00.000</p>
+        <button onclick="reset()">Play Again</button>
+      </div>
 
-      <button onclick="reset()">Play Again</button>
+      <div class="game-object hidden" id="finish">
+        <h1>You Win!</h1>
+
+        <p id="time">Your Time: 00:00:00.000</p>
+
+        <button onclick="reset()">Play Again</button>
+      </div>
+
+      <input
+        id="volume"
+        type="range"
+        min="0"
+        max="100"
+        value="10"
+        oninput="setVolume(this.value / this.max)"
+      />
     </div>
 
     <audio id="music">
