@@ -155,12 +155,6 @@ function reset() {
 
   gameState = STATE_MAIN_MENU;
 
-  for (const enemy of enemies) {
-    enemy.destroy();
-  }
-
-  enemies = [];
-
   player.health = PLAYER_MAX_HEALTH;
   world = generateMaze(rows, cols, 0);
 

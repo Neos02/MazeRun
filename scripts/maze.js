@@ -6,6 +6,12 @@
  * @returns a 2d array representing the maze
  */
 function generateMaze(rows, cols, enemySpawnPercentage) {
+  for (const enemy of enemies) {
+    enemy.destroy();
+  }
+
+  enemies = [];
+
   const grid = new Array(rows).fill().map(() => new Array(cols).fill(WALL));
   const maze = [];
   const frontier = [];
