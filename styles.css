@@ -90,6 +90,31 @@ button:hover {
   z-index: -1;
 }
 
+#leaderboard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+}
+
+.score-list {
+  width: 60%;
+  border-bottom: 1px solid white;
+}
+
+.score-list li {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center;
+  width: 100%;
+  padding: 0.5rem;
+  border-top: 1px solid white;
+  list-style: none;
+}
+
 #volume-container {
   pointer-events: none;
 }

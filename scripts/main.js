@@ -5,6 +5,7 @@ const mainMenu = document.getElementById("mainMenu");
 const difficultySelect = document.getElementById("difficultySelect");
 const gameOver = document.getElementById("gameOver");
 const finish = document.getElementById("finish");
+const leaderboard = document.getElementById("leaderboard");
 
 const healthBar = document.getElementById("healthBar");
 const healthCount = document.getElementById("healthCount");

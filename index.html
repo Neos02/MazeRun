@@ -5,6 +5,9 @@
     <title>Maze Run</title>
     <link rel="stylesheet" type="text/css" href="./styles.css" />
     <link rel="icon" href="./assets/images/favicon.ico" />
+
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
   </head>
   <body>
     <div class="game-object">
@@ -22,23 +25,26 @@
       <div class="game-object" id="mainMenu">
         <h1 class="title">Maze Run</h1>
 
-        <button onclick="chooseDifficulty()">Play</button>
+        <div>
+          <button onclick="chooseDifficulty()">Play</button>
+          <button onclick="viewLeaderboard()">Scores</button>
+        </div>
       </div>
 
       <div class="game-object hidden" id="difficultySelect">
         <h1>Choose Difficulty</h1>
 
         <div id="difficultyBtns">
-          <button onclick="start(11, 40)">Easy</button>
-          <button onclick="start(31, 50)">Medium</button>
-          <button onclick="start(51, 60)">Hard</button>
+          <button onclick="start('easy')">Easy</button>
+          <button onclick="start('medium')">Medium</button>
+          <button onclick="start('hard')">Hard</button>
         </div>
       </div>
 
       <div class="game-object hidden" id="gameOver">
         <h1>Game Over</h1>
 
-        <button onclick="reset()">Play Again</button>
+        <button onclick="reset()">Main Menu</button>
       </div>
 
       <div class="game-object hidden" id="finish">
@@ -46,7 +52,33 @@
 
         <p id="time">Your Time: 00:00:00.000</p>
 
-        <button onclick="reset()">Play Again</button>
+        <button onclick="reset()">Main Menu</button>
+      </div>
+
+      <div class="game-object hidden" id="leaderboard">
+        <h1>Leaderboard</h1>
+
+        <ul class="score-list">
+          <li>
+            <span>Name</span>
+            <span>Time</span>
+            <span>Health</span>
+          </li>
+          <li class="score">NA</li>
+          <li class="score">NA</li>
+          <li class="score">NA</li>
+          <li class="score">NA</li>
+          <li class="score">NA</li>
+          <li class="score">NA</li>
+          <li class="score">NA</li>
+          <li class="score">NA</li>
+          <li class="score">NA</li>
+          <li class="score">NA</li>
+        </ul>
+
+        <p>Scores are only shown for hard difficulty</p>
+
+        <button onclick="toMainMenu()">Back</button>
       </div>
 
       <input
@@ -92,6 +124,7 @@
     <script type="text/javascript" src="./scripts/world.js"></script>
     <script type="text/javascript" src="./scripts/graphics.js"></script>
     <script type="text/javascript" src="./scripts/game.js"></script>
+    <script type="text/javascript" src="./scripts/leaderboard.js"></script>
     <script type="text/javascript" src="./scripts/main.js"></script>
   </body>
 </html>

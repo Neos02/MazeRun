@@ -12,6 +12,22 @@ const player = new Player({
   },
 });
 
+const DIFFICULTIES = {
+  easy: {
+    mazeSize: 11,
+    enemySpawnPercentage: 40,
+  },
+  medium: {
+    mazeSize: 31,
+    enemySpawnPercentage: 50,
+  },
+  hard: {
+    mazeSize: 51,
+    enemySpawnPercentage: 60,
+  },
+};
+
+let difficulty = "easy";
 let enemies = [];
 let world = generateMaze(rows, cols, 40);
 let gameState = STATE_MAIN_MENU;
@@ -76,15 +92,17 @@ function chooseDifficulty() {
 /**
  * Starts the game
  */
-function start(mazeSize = 31, enemySpawnChance = 40) {
+function start(diff) {
+  difficulty = diff;
+
   clickSound.play();
 
   difficultySelect.classList.add("hidden");
 
-  rows = mazeSize;
-  cols = mazeSize;
-  enemySpawnPercentage = enemySpawnChance;
-  world = generateMaze(mazeSize, mazeSize, enemySpawnChance);
+  rows = DIFFICULTIES[diff].mazeSize;
+  cols = DIFFICULTIES[diff].mazeSize;
+
+  world = generateMaze(rows, cols, DIFFICULTIES[diff].enemySpawnPercentage);
   update(10);
   draw();
 
@@ -110,11 +128,19 @@ function win() {
   music.pause();
   winSound.play();
 
-  time.innerText = `Your Time: ${formatMillis(Date.now() - startTime)}`;
+  const milliseconds = Date.now() - startTime;
+
+  time.innerText = `Your Time: ${formatMillis(milliseconds)}`;
 
   finish.classList.remove("hidden");
 
   gameState = STATE_WIN;
+
+  if (difficulty === "hard") {
+    const name = prompt("Enter your name for the leaderboard:");
+
+    addScore(name, difficulty, player.health, milliseconds);
+  }
 }
 
 /**
@@ -140,6 +166,18 @@ function reset() {
 
   update(10);
   draw();
+}
+
+function toMainMenu() {
+  leaderboard.classList.add("hidden");
+  mainMenu.classList.remove("hidden");
+}
+
+function viewLeaderboard() {
+  getLeaderboard();
+
+  leaderboard.classList.remove("hidden");
+  mainMenu.classList.add("hidden");
 }
 
 /**
