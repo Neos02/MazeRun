@@ -66,9 +66,26 @@ function setVolume(volume) {
   winSound.volume = volume;
 }
 
+function initLeaderboard() {
+  for (let i = 0; i < 10; i++) {
+    const li = document.createElement("li");
+    li.classList.add("score");
+
+    const span = document.createElement("span");
+    span.innerText = "---";
+
+    li.appendChild(span);
+    li.appendChild(span.cloneNode(true));
+    li.appendChild(span.cloneNode(true));
+
+    document.getElementById("score-list").appendChild(li);
+  }
+}
+
 document.addEventListener("keydown", keyPressed);
 document.addEventListener("keyup", keyReleased);
 initCanvas(WIDTH, HEIGHT);
+initLeaderboard();
 configureSounds();
 window.requestAnimationFrame(loop);
 ctx.clearRect(0, 0, WIDTH, HEIGHT);

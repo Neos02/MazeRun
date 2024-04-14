@@ -100,12 +100,12 @@ button:hover {
   color: white;
 }
 
-.score-list {
+#score-list {
   width: 60%;
   border-bottom: 1px solid white;
 }
 
-.score-list li {
+#score-list li {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   justify-items: center;
