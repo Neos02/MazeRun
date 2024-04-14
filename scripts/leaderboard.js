@@ -15,7 +15,7 @@ const firestore = app.firestore();
 function getLeaderboard() {
   firestore
     .collection("scores")
-    .orderBy("milliseconds", "desc")
+    .orderBy("milliseconds", "asc")
     .limit(10)
     .get()
     .then((querySnapshot) => {
