@@ -83,8 +83,6 @@ function draw() {
  * Goes to the choose difficulty screen
  */
 function chooseDifficulty() {
-  clickSound.play();
-
   mainMenu.classList.add("hidden");
   difficultySelect.classList.remove("hidden");
 }
@@ -94,8 +92,6 @@ function chooseDifficulty() {
  */
 function start(diff) {
   difficulty = diff;
-
-  clickSound.play();
 
   difficultySelect.classList.add("hidden");
 
@@ -147,8 +143,6 @@ function win() {
  * Resets the game
  */
 function reset() {
-  clickSound.play();
-
   gameOver.classList.add("hidden");
   finish.classList.add("hidden");
   mainMenu.classList.remove("hidden");

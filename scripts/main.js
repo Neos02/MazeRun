@@ -84,6 +84,13 @@ function initLeaderboard() {
 
 document.addEventListener("keydown", keyPressed);
 document.addEventListener("keyup", keyReleased);
+
+for (const button of document.getElementsByTagName("button")) {
+  button.addEventListener("click", () => {
+    clickSound.play();
+  });
+}
+
 initCanvas(WIDTH, HEIGHT);
 initLeaderboard();
 configureSounds();
